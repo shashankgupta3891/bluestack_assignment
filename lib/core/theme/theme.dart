@@ -24,7 +24,7 @@ ThemeData kLightThemeData = ThemeData(
   //   background: Colors.white,
   // ),
   // progressIndicatorTheme:
-  //     const ProgressIndicatorThemeData(color: kThemePurpleBlue),
+  //     const ProgressIndicatorThemeData(color: Colors.orange),
   // // buttonColor: goldYellow,
   // // splashColor: Colors.black,
   // // accentColor: kThemeLightBlue, //Color for Label in Text Field

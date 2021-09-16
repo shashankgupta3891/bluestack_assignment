@@ -308,7 +308,10 @@ class LoginScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           primary: const Color(0xfff7892b)),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(HomeScreen.routeName);
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          HomeScreen.routeName,
+                          (route) => false,
+                        );
                       },
                       child: const Text(
                         'Login',

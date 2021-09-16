@@ -39,6 +39,8 @@ dependencies:
   google_fonts: 
   flutter_spinkit:
   cached_network_image:
+  dio:
+  get_it:
 
 dev_dependencies:
   flutter_test:

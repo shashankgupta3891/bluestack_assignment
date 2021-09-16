@@ -1,3 +1,5 @@
+import 'package:bluestack_assignment/modules/auth/view/login_screen.dart';
+import 'package:bluestack_assignment/modules/home/controller/tournament_provider.dart';
 import 'package:bluestack_assignment/modules/home/view/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -26,7 +28,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
       await Future.delayed(
         const Duration(seconds: 3),
         () => Navigator.of(context).pushNamedAndRemoveUntil(
-          HomeScreen.routeName,
+          LoginScreen.routeName,
           (route) => false,
         ),
       );
