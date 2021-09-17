@@ -12,6 +12,11 @@ class TournamentProvider with ChangeNotifier {
   final TournamentApiRepository _tournamentApiRepository =
       locator.get<TournamentApiRepository>();
 
+  String? _currentCursor =
+      "CmMKGQoMcmVnX2VuZF9kYXRlEgkIgLTH_rqS7AISQmoOc35nYW1lLXR2LXByb2RyMAsSClRvdXJuYW1lbnQiIDIxMDQ5NzU3N2UwOTRmMTU4MWExMDUzODEwMDE3NWYyDBgAIAE=";
+
+  bool get canNext => _currentCursor != null;
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -24,28 +29,22 @@ class TournamentProvider with ChangeNotifier {
     try {
       response = await _tournamentApiRepository.fetchTournaments();
 
-      if (response.statusCode == 200) {
-        TournamentModel tournamentResponse;
-        tournamentResponse =
-            TournamentModel.fromJson(response.data as Map<String, dynamic>);
+      TournamentModel tournamentResponse;
+      tournamentResponse =
+          TournamentModel.fromJson(response.data as Map<String, dynamic>);
 
-        _tournamentsList = [
-          ..._tournamentsList,
-          ...tournamentResponse.data?.tournaments ?? []
-        ];
-        _isLoading = false;
+      _tournamentsList = [
+        ..._tournamentsList,
+        ...tournamentResponse.data?.tournaments ?? []
+      ];
+      _isLoading = false;
 
-        notifyListeners();
-        // _userModel = touranamentResponse;
+      notifyListeners();
+      // _userModel = touranamentResponse;
 
-        // Navigator.pushNamedAndRemoveUntil(
-        //     context, DashboardScreen.routeName, (route) => false);
-      } else {
-        // final String msg = response.statusMessage ?? "Some Error";
+      // Navigator.pushNamedAndRemoveUntil(
+      //     context, DashboardScreen.routeName, (route) => false);
 
-        // Toast.show(msg, context,
-        //     duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-      }
     } on dio.DioError catch (e) {
       print("e.message");
       print(e.message);

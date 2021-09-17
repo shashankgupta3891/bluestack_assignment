@@ -1,5 +1,6 @@
 import 'package:bluestack_assignment/core/service/internal_storage_service.dart';
 import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart';
+import 'package:bluestack_assignment/modules/auth/view/drawer/drawer.dart';
 import 'package:bluestack_assignment/modules/home/controller/tournament_provider.dart';
 import 'package:bluestack_assignment/modules/home/view/section/profile_view.dart';
 
@@ -32,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final AuthProvider authProvider = context.read<AuthProvider>();
     return Scaffold(
+      drawer: const HomeDrawer(),
       appBar: AppBar(
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.black),
@@ -51,28 +53,49 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         elevation: 0,
-        leading: const Icon(Icons.menu),
+        // leading: const Icon(Icons.menu),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Selector<TournamentProvider, bool>(
-            selector: (_, tournamentProvider) => tournamentProvider.isLoading,
-            builder: (_, bool loader, __) =>
-                loader ? const LinearProgressIndicator() : Container(),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Column(
-                children: const [
-                  ProfileView(),
-                  TournamentGridSection(),
-                ],
+      body: Selector<TournamentProvider, bool>(
+        selector: (_, tournamentProvider) => tournamentProvider.isLoading,
+        builder: (context, isLoading, child) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              isLoading ? const LinearProgressIndicator() : Container(),
+              Expanded(
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification sn) {
+                    if (!isLoading &&
+                        sn is ScrollUpdateNotification &&
+                        sn.metrics.pixels == sn.metrics.maxScrollExtent) {
+                      // setState(() {
+                      //   this.isLoading = true;
+                      // });
+                      // widget.onNextPage?.call(currentPage++)?.then((bool isLoaded) {
+                      //   setState(() {
+                      //     this.isLoading = false;
+                      //   });
+                      // });
+
+                      debugPrint(isLoading.toString());
+                    }
+                    return true;
+                  },
+                  child: child ?? Container(),
+                ),
               ),
-            ),
+            ],
+          );
+        },
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          child: Column(
+            children: const [
+              ProfileView(),
+              TournamentGridSection(),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
