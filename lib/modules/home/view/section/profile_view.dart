@@ -1,10 +1,19 @@
+import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart';
+import 'package:bluestack_assignment/modules/auth/model/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    UserModel? userModel =
+        context.select<AuthProvider, UserModel?>((value) => value.userModel);
+
+    final int won = userModel?.tournamentsStats?.won ?? 0;
+    final int played = userModel?.tournamentsStats?.played ?? 0;
+    final winningPercentage = ((won / played) * 100).toInt().toString();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
@@ -16,16 +25,23 @@ class ProfileView extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Container(
+              SizedBox(
                 height: 85,
                 width: 85,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(40),
 
-                  child: Image.asset(
-                    "assets/images/default_face.jpg",
+                  child: Image.network(
+                    userModel?.profilePicture ??
+                        "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
                     fit: BoxFit.cover,
                   ),
+
+                  //  Image.asset(
+
+                  //       "assets/images/default_face.jpg",
+                  //   fit: BoxFit.cover,
+                  // ),
 
                   // child: Image.network(
                   //   "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
@@ -53,11 +69,11 @@ class ProfileView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Shashank Gupta",
-                      style: TextStyle(fontSize: 24),
+                      userModel?.fullName ?? "Shashank Gupta",
+                      style: const TextStyle(fontSize: 24),
                     ),
                   ),
                   Padding(
@@ -72,16 +88,16 @@ class ProfileView extends StatelessWidget {
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const <Widget>[
+                        children: <Widget>[
                           Text(
-                            "2000",
-                            style: TextStyle(
+                            userModel?.rating?.toString() ?? "2000",
+                            style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold),
                           ),
-                          Text(" "),
-                          Text(
+                          const Text(" "),
+                          const Text(
                             'Elo rating',
                             style: TextStyle(
                                 color: Colors.blueGrey,
@@ -106,7 +122,7 @@ class ProfileView extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: getStatsWidget(
-                      '34',
+                      played.toString(),
                       'Tournaments\nplayed',
                       const LinearGradient(
                         begin: Alignment.centerLeft,
@@ -119,7 +135,7 @@ class ProfileView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 1.0, right: 1),
                       child: getStatsWidget(
-                        '09',
+                        won.toString(),
                         'Tournaments\nwon',
                         const LinearGradient(
                           begin: Alignment.bottomCenter,
@@ -131,7 +147,7 @@ class ProfileView extends StatelessWidget {
                   ),
                   Expanded(
                     child: getStatsWidget(
-                      "26%",
+                      "${winningPercentage.toString()}%",
                       'Winning\npercentage',
                       const LinearGradient(
                         begin: Alignment.centerLeft,

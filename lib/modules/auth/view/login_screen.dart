@@ -1,7 +1,11 @@
 import 'package:bluestack_assignment/modules/auth/components/bezier_container.dart';
+import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart';
 import 'package:bluestack_assignment/modules/home/view/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routeName = "/login";
@@ -10,6 +14,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+
+    AuthProvider authProvider = context.read<AuthProvider>();
 
     // Widget _backButton() {
     //   return InkWell(
@@ -230,6 +236,9 @@ class LoginScreen extends StatelessWidget {
     //   );
     // }
 
+    final RoundedLoadingButtonController _btnController =
+        RoundedLoadingButtonController();
+
     return Scaffold(
       body: SizedBox(
         height: height,
@@ -247,29 +256,47 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(height: height * .2),
-                    SizedBox(
-                      child: Image.asset("assets/images/gametv-logo.png"),
-                      width: MediaQuery.of(context).size.width * 0.3,
+
+                    KeyboardVisibilityBuilder(
+                      builder: (context, isKeyboardVisible) {
+                        final double widthSize =
+                            isKeyboardVisible ? 0.27 : 0.35;
+                        return Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 500),
+                            width:
+                                MediaQuery.of(context).size.width * widthSize,
+                            child: Image.asset('assets/images/gametv-logo.png'),
+                          ),
+                        );
+                      },
                     ),
+                    // SizedBox(
+                    //   child: Image.asset("assets/images/gametv-logo.png"),
+                    //   width: MediaQuery.of(context).size.width * 0.3,
+                    // ),
                     const SizedBox(height: 50),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
+                        children: [
+                          const Text(
                             "Email id",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          TextField(
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                fillColor: Color(0xfff3f3f4),
-                                filled: true),
+                          const SizedBox(height: 10),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              fillColor: Color(0xfff3f3f4),
+                              filled: true,
+                            ),
+                            validator: (String? value) {
+                              return null;
+                            },
                           )
                         ],
                       ),
@@ -279,18 +306,16 @@ class LoginScreen extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
+                        children: [
+                          const Text(
                             "Password",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          TextField(
+                          const SizedBox(height: 10),
+                          TextFormField(
                             obscureText: true,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 fillColor: Color(0xfff3f3f4),
                                 filled: true),
@@ -301,29 +326,49 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     // _submitButton(),
 
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          fixedSize:
-                              Size.fromWidth(MediaQuery.of(context).size.width),
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          primary: const Color(0xfff7892b)),
+                    RoundedLoadingButton(
+                      child: const Text('Login'),
+                      borderRadius: 10,
+                      controller: _btnController,
+                      width: MediaQuery.of(context).size.width,
+                      color: const Color(0xfff7892b),
                       onPressed: () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          HomeScreen.routeName,
-                          (route) => false,
+                        // _btnController.success();
+
+                        authProvider.login(
+                          context,
+                          onSuccess: () => _btnController.success(),
+                          onError: () => _btnController.error(),
                         );
                       },
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                    ),
+                    )
+                    // ElevatedButton(
+                    //   style: ElevatedButton.styleFrom(
+                    //       fixedSize:
+                    //           Size.fromWidth(MediaQuery.of(context).size.width),
+                    //       padding: const EdgeInsets.symmetric(vertical: 15),
+                    //       primary: const Color(0xfff7892b)),
+                    //   onPressed: () async => authProvider.login(context),
+                    //   child: Row(
+                    //     children: const [
+                    //       CircularProgressIndicator.adaptive(),
+                    //       const Text(
+                    //         'Login',
+                    //         style: TextStyle(fontSize: 20, color: Colors.white),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+
+                    ,
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       alignment: Alignment.centerRight,
-                      child: const Text('Forgot Password ?',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w500)),
+                      child: const Text(
+                        'Forgot Password ?',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w500),
+                      ),
                     ),
                     // _divider(),
                     // _facebookButton(),

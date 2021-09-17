@@ -1,3 +1,4 @@
+import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart';
 import 'package:bluestack_assignment/modules/home/controller/tournament_provider.dart';
 import 'package:bluestack_assignment/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<AuthProvider>(
+          create: (_) => AuthProvider(),
+        ),
         ChangeNotifierProvider<TournamentProvider>(
           create: (_) => TournamentProvider(),
         ),

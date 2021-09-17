@@ -1,119 +1,69 @@
-import 'package:dio/dio.dart' as dio;
+import 'package:bluestack_assignment/core/api_repository/auth_api_repository.dart';
+import 'package:bluestack_assignment/modules/auth/model/user_model.dart';
+import 'package:bluestack_assignment/modules/home/view/home_screen.dart';
+import 'package:dio/dio.dart';
+// import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
-// import 'package:toast/toast.dart';
-
-// import '../../../core/services/api/main_api_services.dart';
 import '../../../locator.dart';
-// import '../../dashboard/model/user_model.dart';
-// import '../../dashboard/screens/dashboard.dart';
-// import '../screens/login_screen.dart';
 
 class AuthProvider with ChangeNotifier {
-  // UserModel _userModel;
-  // UserModel get userModel => _userModel;
+  UserModel? _userModel;
 
-  // final MainAPIServices _mainAPIServices = locator.get<MainAPIServices>();
+  UserModel? get userModel => _userModel;
 
-  // Future<void> signIn(BuildContext context,
-  //     {@required String email, @required String password}) async {
-  //   // debugPrint("AuthProvider SignIn called");
+  final AuthApiRepository _apiRepository = locator.get<AuthApiRepository>();
 
-  //   dio.Response response;
-  //   try {
-  //     response =
-  //         await _mainAPIServices.signIn(email: email, password: password);
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
-  //     if (response?.statusCode == 200) {
-  //       UserModel user;
-  //       user =
-  //           UserModel.fromJson(response?.data['user'] as Map<String, dynamic>);
-  //       _userModel = user;
+  Future<void> login(
+    BuildContext context, {
+    VoidCallback? onSuccess,
+    VoidCallback? onError,
+  }) async {
+    _isLoading = true;
+    notifyListeners();
 
-  //       Navigator.pushNamedAndRemoveUntil(
-  //           context, DashboardScreen.routeName, (route) => false);
-  //     } else {
-  //       final String msg = response?.statusMessage ?? "Some Error";
+    try {
+      Response response = await _apiRepository.login();
 
-  //       Toast.show(msg, context,
-  //           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-  //     }
-  //   } on dio.DioError catch (e) {
-  //     final String msg = e?.response?.statusMessage ?? "Some Error";
+      _userModel =
+          UserModel.fromJson(response.data["data"] as Map<String, dynamic>);
 
-  //     Toast.show(msg, context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
-  //   } catch (e) {
-  //     // debugPrint(e.toString());
+      onSuccess?.call();
 
-  //     final String msg = e?.response?.statusCode == 404
-  //         ? "Email or Password is incorrect"
-  //         : e?.response?.statusMessage as String;
+      await Future.delayed(const Duration(seconds: 2));
 
-  //     Toast.show(msg, context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
-  //   }
-  // }
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
+    } on DioError catch (e) {
+      debugPrint(e.message);
+      // print("e.message");
+      // print(e.message);
+      // final String msg = e.response?.statusMessage ?? "Some Error";
 
-  // Future<void> getUserDetails(BuildContext context) async {
-  //   // debugPrint("AuthProvider getUserDetails called");
+      onError?.call();
 
-  //   dio.Response response;
-  //   try {
-  //     _userModel = null;
+      // Toast.show(msg, context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
 
-  //     response = await locator.get<MainAPIServices>().userDetails();
+      ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(
+          content: Text(e.message),
+          actions: [TextButton(onPressed: () {}, child: const Text("Ok"))]));
+    } catch (e) {
+      debugPrint(e.toString());
 
-  //     if (response?.statusCode == 200) {
-  //       UserModel user;
-  //       user =
-  //           UserModel.fromJson(response?.data['user'] as Map<String, dynamic>);
-  //       _userModel = user;
+      onError?.call();
+      // debugPrint(e.toString());
 
-  //       Navigator.pushNamedAndRemoveUntil(
-  //           context, DashboardScreen.routeName, (route) => false);
-  //     } else {
-  //       final String msg = response?.statusMessage ?? "Some Error";
-  //       Navigator.pushNamedAndRemoveUntil(
-  //           context, LoginScreen.routeName, (route) => false);
-  //       Toast.show(msg, context,
-  //           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-  //     }
-  //   }
-  //   //  on dio.DioError catch (e) {
-  //   //   final String msg = e?.response?.statusMessage ?? "Some Error";
+      // final String msg = e?.response?.statusCode == 404
+      //     ? "Email or Password is incorrect"
+      //     : e?.response?.statusMessage as String;
 
-  //   //   Navigator.pushNamedAndRemoveUntil(
-  //   //       context, LoginScreen.routeName, (route) => false);
+      // Toast.show(msg, context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+    } finally {
+      _isLoading = false;
 
-  //   //   Toast.show(msg, context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
-  //   // }
-
-  //   catch (e) {
-  //     // debugPrint(e.toString());
-
-  //     // final String msg = e?.response?.statusCode == 404
-  //     //     ? "Email or Password is incorrect"
-  //     //     : e?.response?.statusMessage as String;
-
-  //     Future.delayed(
-  //       const Duration(seconds: 2),
-  //       () => Navigator.pushNamedAndRemoveUntil(
-  //         context,
-  //         LoginScreen.routeName,
-  //         (route) => false,
-  //       ),
-  //     );
-
-  //     // Toast.show(msg, context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
-  //   }
-  // }
-
-  // Future<void> logout(BuildContext context) async {
-  //   // debugPrint("AuthProvider logout called");
-
-  //   await _mainAPIServices.logout();
-
-  //   _userModel = null;
-
-  //   Navigator.pushNamedAndRemoveUntil(
-  //       context, LoginScreen.routeName, (route) => false);
-  // }
+      notifyListeners();
+    }
+  }
 }
