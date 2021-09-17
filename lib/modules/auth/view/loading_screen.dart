@@ -1,12 +1,14 @@
+import 'package:bluestack_assignment/core/constant/image_src_constant.dart';
+import 'package:bluestack_assignment/core/service/internal_storage_service.dart';
+import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart';
 import 'package:bluestack_assignment/modules/auth/view/login_screen.dart';
-import 'package:bluestack_assignment/modules/home/controller/tournament_provider.dart';
 import 'package:bluestack_assignment/modules/home/view/home_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-// import 'package:manufapp/modules/auth/controllers/auth_provider.dart';
-// import 'package:manufapp/utils/components/util_components_src.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 class LoadingScreen extends StatefulWidget {
   static const String routeName = '/';
@@ -23,15 +25,45 @@ class _LoadingScreenState extends State<LoadingScreen> {
     super.initState();
 
     SchedulerBinding.instance?.addPostFrameCallback((_) async {
-      // context.read<AuthProvider>().getUserDetails(context);
+      //It will give delay on loading.
+      final AuthProvider authProvider = context.read<AuthProvider>();
 
-      await Future.delayed(
-        const Duration(seconds: 3),
-        () => Navigator.of(context).pushNamedAndRemoveUntil(
-          LoginScreen.routeName,
-          (route) => false,
-        ),
-      );
+      InternalStorage internalStorage = InternalStorage();
+
+      final bool hasCredentials = internalStorage.hasLoginCredentials();
+
+      if (hasCredentials) {
+        final Tuple2<String?, String?> credentials =
+            internalStorage.getLoginCredentials();
+
+        debugPrint(
+            credentials.item1.toString() + "  " + credentials.item2.toString());
+
+        authProvider.login(
+          userId: credentials.item1 ?? "",
+          password: credentials.item2 ?? "",
+          onSuccess: () => Navigator.of(context).pushNamedAndRemoveUntil(
+            HomeScreen.routeName,
+            (route) => false,
+          ),
+          onError: (String errMassage) async {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(errMassage)));
+            await Navigator.of(context).pushNamedAndRemoveUntil(
+              LoginScreen.routeName,
+              (route) => false,
+            );
+          },
+        );
+      } else {
+        await Future.delayed(
+          const Duration(seconds: 3),
+          () => Navigator.of(context).pushNamedAndRemoveUntil(
+            LoginScreen.routeName,
+            (route) => false,
+          ),
+        );
+      }
     });
   }
 
@@ -44,7 +76,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // const CompanyLogo(),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  child: Image.asset(KImageConstant.companyLogo)),
               SpinKitFadingCircle(
                   color: Theme.of(context).primaryColor, size: 70),
             ],

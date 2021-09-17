@@ -1,8 +1,10 @@
+import 'package:bluestack_assignment/core/service/internal_storage_service.dart';
+import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart';
 import 'package:bluestack_assignment/modules/home/controller/tournament_provider.dart';
 import 'package:bluestack_assignment/modules/home/view/section/profile_view.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+
 import 'package:provider/provider.dart';
 
 import 'section/tournament_grid_section.dart';
@@ -16,19 +18,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  InternalStorage internalStorage = InternalStorage();
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
-      // context.read<AuthProvider>().getUserDetails(context);
-
       await context.read<TournamentProvider>().getTournamentList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final AuthProvider authProvider = context.read<AuthProvider>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -42,7 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
             fontSize: 20,
           ),
         ),
-        actions: [IconButton(icon: const Icon(Icons.logout), onPressed: () {})],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () => authProvider.logout(context),
+          ),
+        ],
         elevation: 0,
         leading: const Icon(Icons.menu),
       ),

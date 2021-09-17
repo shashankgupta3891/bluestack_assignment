@@ -1,3 +1,4 @@
+import 'package:bluestack_assignment/core/service/internal_storage_service.dart';
 import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart';
 import 'package:bluestack_assignment/modules/home/controller/tournament_provider.dart';
 import 'package:bluestack_assignment/routes/routes.dart';
@@ -8,7 +9,9 @@ import 'core/theme/theme.dart';
 import 'locator.dart';
 import 'modules/auth/view/loading_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await InternalStorage().init();
   setup();
   runApp(const MyApp());
 }
@@ -28,9 +31,9 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Game.tv',
         theme: kLightThemeData,
-        // home: const LoginScreen(),
         initialRoute: LoadingScreen.routeName,
         onGenerateRoute: getRoute,
       ),
