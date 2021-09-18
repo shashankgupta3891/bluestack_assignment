@@ -12,16 +12,16 @@ Login               |  Welcome  |  Register
 ## Flutter plugins
 Plugin Name        |       
 :-------------------------|
-|[flutter_localizations](https://github.com/TheAlphamerc/empty_widget) |
-|[intl](https://github.com/TheAlphamerc/flutter_plugin_add_thumbnail) |
-|[provider](https://github.com/TheAlphamerc/flutter_plugin_filter_list)|
-|[get_it](https://github.com/TheAlphamerc/flutter_plugin_filter_list)|
-|[shared_preferences](https://github.com/TheAlphamerc/flutter_plugin_filter_list)|
+|[flutter_localizations](https://flutter.dev/docs/development/accessibility-and-localization/internationalization) |
+|[intl](https://pub.dev/packages/intl) |
+|[provider](https://pub.dev/packages/provider)|
+|[get_it](https://pub.dev/packages/get_it)|
+|[shared_preferences](https://pub.dev/packages/shared_preferences)|
 |[flutter_launcher_icons](https://github.com/TheAlphamerc/flutter_plugin_filter_list)|
-|[flutter_keyboard_visibility](https://github.com/TheAlphamerc/flutter_plugin_filter_list)|
-|[rounded_loading_button](https://github.com/TheAlphamerc/flutter_plugin_filter_list)|
-|[tuple](https://github.com/TheAlphamerc/flutter_plugin_filter_list)|
+|[flutter_keyboard_visibility](https://pub.dev/packages/flutter_launcher_icons)|
+|[rounded_loading_button](https://pub.dev/packages/rounded_loading_button)|
+|[tuple](https://pub.dev/packages/tuple)|
 
-### Created & Maintained By
+### Created By
 
 [Shashank Gupta](https://github.com/shashankgupta3891) 
