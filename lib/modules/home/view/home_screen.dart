@@ -3,11 +3,7 @@ import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart'
 import 'package:bluestack_assignment/modules/auth/view/drawer/drawer.dart';
 import 'package:bluestack_assignment/modules/home/controller/home_provider.dart';
 import 'package:bluestack_assignment/modules/home/view/section/profile_view.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-import 'package:provider/provider.dart';
+import 'package:bluestack_assignment/common.dart';
 import 'package:tuple/tuple.dart';
 
 import 'section/tournament_grid_section.dart';

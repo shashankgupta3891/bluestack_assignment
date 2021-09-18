@@ -30,6 +30,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
+  intl: ^0.17.0
+
   cupertino_icons: ^1.0.2
 
   provider: 
@@ -42,6 +47,7 @@ dependencies:
   rounded_loading_button: ^2.0.7
   shared_preferences:
   tuple: ^2.0.0
+  
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +72,7 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

@@ -1,0 +1,57 @@
+{
+    "userId":"ユーザーID",
+    "@userId": {
+        "description": "Unique user id"
+    },
+
+    "password":"パスワード",
+    "@password": {
+        "description": "Password"
+    },
+
+    "login":"ログイン",
+    "@login": {
+        "description": "Login"
+    },
+
+    "forgetPassword":"パスワードをお忘れですか",
+    "@forgetPassword": {
+        "description": "Forget Password"
+    },
+
+    "noTextValidation":"何か入力してください",
+    "@noTextValidation": {
+        "description": "No text Entered"
+    },
+
+    "enterMoreThan": "{num}文字以上入力してください",
+    "@enterMoreThan": {
+        "placeholders": {
+            "num": {
+            "type": "int",
+            "example": "3"
+            }
+        }
+    },
+
+    "enterLessThan": "{num}文字未満で入力してください",
+    "@enterLessThan": {
+        "placeholders": {
+            "num": {
+            "type": "int",
+            "example": "3"
+            }
+        }
+    },
+
+    "notAvailable":"利用不可",
+    "@notAvailable": {
+        "description": "Not available"
+    },
+
+    "recommendedForYou":"あなたにおすすめ",
+    "@recommendedForYou": {
+        "description": "Recommended for you"
+    }
+    
+}

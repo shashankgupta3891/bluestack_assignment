@@ -2,11 +2,13 @@ import 'package:bluestack_assignment/core/service/internal_storage_service.dart'
 import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart';
 import 'package:bluestack_assignment/modules/home/controller/home_provider.dart';
 import 'package:bluestack_assignment/routes/routes.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'common.dart';
 
 import 'core/theme/theme.dart';
-import 'locator.dart';
+
 import 'modules/auth/view/loading_screen.dart';
 
 Future<void> main() async {
@@ -34,6 +36,17 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Game.tv',
         theme: kLightThemeData,
+        localizationsDelegates: const [
+          // App specific localization delegate
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en', 'IN'), // English
+          Locale('ja', 'JP'), // Japanese
+        ],
         initialRoute: LoadingScreen.routeName,
         onGenerateRoute: getRoute,
       ),

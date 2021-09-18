@@ -1,8 +1,8 @@
 import 'package:bluestack_assignment/core/api_repository/tournament_api_repository.dart';
-import 'package:bluestack_assignment/locator.dart';
 import 'package:bluestack_assignment/modules/home/model/tournament_model.dart';
 import 'package:dio/dio.dart' as dio;
-import 'package:flutter/material.dart';
+
+import 'package:bluestack_assignment/common.dart';
 
 class HomeProvider with ChangeNotifier {
   List<Tournaments> _tournamentsList = [];

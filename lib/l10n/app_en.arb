@@ -1,0 +1,57 @@
+{
+    "userId":"User Id",
+    "@userId": {
+        "description": "Unique user id"
+    },
+
+    "password":"Password",
+    "@password": {
+        "description": "Password"
+    },
+
+    "login":"Login",
+    "@login": {
+        "description": "Login"
+    },
+
+    "forgetPassword":"Forgot Password",
+    "@forgetPassword": {
+        "description": "Forget Password"
+    },
+
+    "noTextValidation":"Please Enter someting",
+    "@noTextValidation": {
+        "description": "No text Entered"
+    },
+
+    "enterMoreThan": "Please Enter more then {num} characters",
+    "@enterMoreThan": {
+        "placeholders": {
+            "num": {
+            "type": "int",
+            "example": "3"
+            }
+        }
+    },
+
+    "enterLessThan": "Please Enter less than {num} characters",
+    "@enterLessThan": {
+        "placeholders": {
+            "num": {
+            "type": "int",
+            "example": "3"
+            }
+        }
+    },
+
+    "notAvailable":"Not available",
+    "@notAvailable": {
+        "description": "Not available"
+    },
+
+    "recommendedForYou":"Recommended for you",
+    "@recommendedForYou": {
+        "description": "Recommended for you"
+    }
+    
+}

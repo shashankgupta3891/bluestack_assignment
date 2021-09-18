@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuple/tuple.dart';
 
+///Wrapper class for SharedPreference with easy to user functions
 class InternalStorage {
   static const String userIdKey = 'userId';
   static const String passwordKey = 'password';

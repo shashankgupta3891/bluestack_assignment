@@ -34,7 +34,6 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      // debugPrint(userId.toString() + "  " + password.toString());
       if (!_loginDetails.containsKey(userId)) {
         throw Exception("Invalid credentials");
       }

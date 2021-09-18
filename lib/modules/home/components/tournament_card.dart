@@ -1,3 +1,4 @@
+import 'package:bluestack_assignment/core/constant/image_src_constant.dart';
 import 'package:bluestack_assignment/core/constant/theme_constant.dart';
 import 'package:bluestack_assignment/modules/home/model/tournament_model.dart';
 import 'package:flutter/material.dart';
@@ -20,20 +21,9 @@ class TournamentCard extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Image.network(
-              tournaments.coverUrl ??
-                  "https://images.pexels.com/photos/371924/pexels-photo-371924.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+              tournaments.coverUrl ?? KImageConstant.defaultCoverImage,
               fit: BoxFit.cover,
             ),
-            // child: Row(
-            //   crossAxisAlignment: CrossAxisAlignment.stretch,
-            //   children: [
-            //     CachedNetworkImage(
-            //       fit: BoxFit.fitWidth,
-            //       imageUrl:
-            //           "https://images.pexels.com/photos/371924/pexels-photo-371924.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-            //     ),
-            //   ],
-            // ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
