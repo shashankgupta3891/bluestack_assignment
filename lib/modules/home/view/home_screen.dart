@@ -1,4 +1,3 @@
-import 'package:bluestack_assignment/core/service/internal_storage_service.dart';
 import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart';
 import 'package:bluestack_assignment/modules/auth/view/drawer/drawer.dart';
 import 'package:bluestack_assignment/modules/home/controller/home_provider.dart';
@@ -8,24 +7,9 @@ import 'package:tuple/tuple.dart';
 
 import 'section/tournament_grid_section.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   static const String routeName = "/home";
   const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  InternalStorage internalStorage = InternalStorage();
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
-      await context.read<HomeProvider>().fetchInitialList();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollNotification.metrics.pixels ==
                     scrollNotification.metrics.maxScrollExtent) {
               if (tournamentProvide.canNext) {
-                tournamentProvide.fetchNext();
+                try {
+                  tournamentProvide.fetchNext();
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(e.toString())),
+                  );
+                }
               }
 
               debugPrint(tournamentProvide.tournamentsList.length.toString());

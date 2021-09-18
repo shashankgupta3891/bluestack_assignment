@@ -44,27 +44,12 @@ class HomeProvider with ChangeNotifier {
       _isLoading = false;
 
       notifyListeners();
-      // _userModel = touranamentResponse;
-
-      // Navigator.pushNamedAndRemoveUntil(
-      //     context, DashboardScreen.routeName, (route) => false);
-
     } on dio.DioError catch (e) {
-      print("e.message");
-      print(e.message);
-      // final String msg = e.response?.statusMessage ?? "Some Error";
-
-      // Toast.show(msg, context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+      debugPrint(e.message);
+      throw Exception(e.message);
     } catch (e) {
-      print("e.message");
-      print(e);
-      // debugPrint(e.toString());
-
-      // final String msg = e?.response?.statusCode == 404
-      //     ? "Email or Password is incorrect"
-      //     : e?.response?.statusMessage as String;
-
-      // Toast.show(msg, context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+      debugPrint(e.toString());
+      throw Exception(e.toString());
     }
   }
 
@@ -93,28 +78,14 @@ class HomeProvider with ChangeNotifier {
           ...tournamentResponse.data?.tournaments ?? []
         ];
       }
-
-      // _userModel = touranamentResponse;
-
-      // Navigator.pushNamedAndRemoveUntil(
-      //     context, DashboardScreen.routeName, (route) => false);
-
     } on dio.DioError catch (e) {
-      print("e.message");
-      print(e.message);
-      // final String msg = e.response?.statusMessage ?? "Some Error";
+      debugPrint(e.message);
 
-      // Toast.show(msg, context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+      throw Exception(e.message);
     } catch (e) {
-      print("e.message");
-      print(e);
-      // debugPrint(e.toString());
+      debugPrint(e.toString());
 
-      // final String msg = e?.response?.statusCode == 404
-      //     ? "Email or Password is incorrect"
-      //     : e?.response?.statusMessage as String;
-
-      // Toast.show(msg, context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+      throw Exception(e);
     } finally {
       _isLoading = false;
 
