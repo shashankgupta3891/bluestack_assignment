@@ -50,27 +50,29 @@ class _HomeScreenState extends State<HomeScreen> {
           final bool isLoading = listener.item1;
           final bool canNext = listener.item2;
 
+          bool onNotification(ScrollNotification scrollNotification) {
+            if (!isLoading &&
+                scrollNotification is ScrollUpdateNotification &&
+                scrollNotification.metrics.pixels ==
+                    scrollNotification.metrics.maxScrollExtent) {
+              if (tournamentProvide.canNext) {
+                tournamentProvide.fetchNext();
+              }
+
+              debugPrint(tournamentProvide.tournamentsList.length.toString());
+
+              debugPrint(isLoading.toString());
+            }
+            return true;
+          }
+
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              isLoading ? const LinearProgressIndicator() : Container(),
+              if (isLoading) const LinearProgressIndicator(),
               Expanded(
                 child: NotificationListener<ScrollNotification>(
-                  onNotification: (ScrollNotification sn) {
-                    if (!isLoading &&
-                        sn is ScrollUpdateNotification &&
-                        sn.metrics.pixels == sn.metrics.maxScrollExtent) {
-                      if (tournamentProvide.canNext) {
-                        tournamentProvide.fetchNext();
-                      }
-
-                      debugPrint(
-                          tournamentProvide.tournamentsList.length.toString());
-
-                      debugPrint(isLoading.toString());
-                    }
-                    return true;
-                  },
+                  onNotification: onNotification,
                   child: Scrollbar(
                     isAlwaysShown: true,
                     thickness: 8,
@@ -85,11 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: EdgeInsets.all(16.0),
                               child: CircularProgressIndicator(),
                             ),
-
-                          //       Selector<TournamentProvider, bool>(
-                          // selector: (_, tournamentProvider) => tournamentProvider.canNext,
-                          // builder: (context, isLoading, child) => Container(),
-                          //       ),
                         ],
                       ),
                     ),
