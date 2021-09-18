@@ -3,11 +3,11 @@
 ## Download App
 <a href="https://github.com/shashankgupta3891/bluestack_assignment/tree/master/output_apks"><img src="https://playerzon.com/asset/download.png" width="200"></img></a>
 
-## Screenshots
+## Screenshots and Video demo
 
-Loading               |  Login  |  Home
-:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/loading_screen.jpg?raw=true)|![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/login_screen.jpg?raw=true)|![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/home_screen.jpg?raw=true) 
+ Video Demo   |Loading      |  Login  |  Home    
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/demo.gif?raw=true)|![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/loading_screen.jpg?raw=true)|![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/login_screen.jpg?raw=true)|![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/home_screen.jpg?raw=true)
 
 ## Flutter plugins
 Plugin Name        |       
