@@ -31,6 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final TournamentProvider tournamentProvide =
+        context.read<TournamentProvider>();
     final AuthProvider authProvider = context.read<AuthProvider>();
     return Scaffold(
       drawer: const HomeDrawer(),
@@ -68,6 +70,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (!isLoading &&
                         sn is ScrollUpdateNotification &&
                         sn.metrics.pixels == sn.metrics.maxScrollExtent) {
+                      if (tournamentProvide.canNext) {
+                        tournamentProvide.fetchNext();
+                      }
+
+                      print(tournamentProvide.tournamentsList.length);
                       // setState(() {
                       //   this.isLoading = true;
                       // });
