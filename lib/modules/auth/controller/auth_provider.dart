@@ -44,7 +44,7 @@ class AuthProvider with ChangeNotifier {
 
       await internalStorage.setLoginCredentials(userId, password);
 
-      Response response = await _apiRepository.login();
+      Response response = await _apiRepository.login(userId, password);
 
       _userModel =
           UserModel.fromJson(response.data["data"] as Map<String, dynamic>);

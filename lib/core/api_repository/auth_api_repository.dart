@@ -11,10 +11,10 @@ class AuthApiRepository {
       ..interceptors.addAll([LogInterceptor(responseBody: true)]);
   }
 
-  Future<Response> login() async {
+  Future<Response> login(String userId, String password) async {
     Response response;
     try {
-      response = await _dio!.get('/v1/login');
+      response = await _dio!.get('/v1/login/$userId');
 
       return response;
       // debugPrint(response.data.toString());
