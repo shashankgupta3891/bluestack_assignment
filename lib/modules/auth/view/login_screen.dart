@@ -30,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
 
     AuthProvider authProvider = context.read<AuthProvider>();
 
@@ -41,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Positioned(
               top: -height * .15,
-              right: -MediaQuery.of(context).size.width * .4,
+              right: -width * .4,
               child: const BezierContainer(),
             ),
             Container(
@@ -55,14 +56,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: height * .2),
                       KeyboardVisibilityBuilder(
                         builder: (context, isKeyboardVisible) {
-                          final double widthSize =
+                          final double widthPercentage =
                               isKeyboardVisible ? 0.27 : 0.35;
                           return Padding(
                             padding: const EdgeInsets.all(10),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 500),
-                              width:
-                                  MediaQuery.of(context).size.width * widthSize,
+                              width: width * widthPercentage,
                               child: Image.asset(KImageConstant.companyLogo),
                             ),
                           );
@@ -119,34 +119,35 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 20),
                       ValueListenableBuilder<bool>(
-                          valueListenable: isValid,
-                          builder: (context, value, _) {
-                            return RoundedLoadingButton(
-                              resetAfterDuration: true,
-                              successColor: Colors.green,
-                              resetDuration: const Duration(seconds: 5),
-                              child: Text(AppLocalizations.of(context)?.login ??
-                                  'Login'),
-                              borderRadius: 10,
-                              controller: _btnController,
-                              width: MediaQuery.of(context).size.width,
-                              color: Theme.of(context).primaryColor,
-                              onPressed: value
-                                  ? () {
-                                      try {
-                                        authProvider.login(
-                                          userId: userIdController.text,
-                                          password: passwordController.text,
-                                          onSuccess: _onLoginSuccess,
-                                          onError: _onLoginError,
-                                        );
-                                      } catch (e) {
-                                        _btnController.reset();
-                                      }
+                        valueListenable: isValid,
+                        builder: (context, value, _) {
+                          return RoundedLoadingButton(
+                            resetAfterDuration: true,
+                            successColor: Colors.green,
+                            resetDuration: const Duration(seconds: 5),
+                            child: Text(
+                                AppLocalizations.of(context)?.login ?? 'Login'),
+                            borderRadius: 10,
+                            controller: _btnController,
+                            width: MediaQuery.of(context).size.width,
+                            color: Theme.of(context).primaryColor,
+                            onPressed: value
+                                ? () {
+                                    try {
+                                      authProvider.login(
+                                        userId: userIdController.text,
+                                        password: passwordController.text,
+                                        onSuccess: _onLoginSuccess,
+                                        onError: _onLoginError,
+                                      );
+                                    } catch (e) {
+                                      _btnController.reset();
                                     }
-                                  : null,
-                            );
-                          }),
+                                  }
+                                : null,
+                          );
+                        },
+                      ),
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         alignment: Alignment.centerRight,

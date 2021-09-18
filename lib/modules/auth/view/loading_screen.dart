@@ -4,10 +4,11 @@ import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart'
 import 'package:bluestack_assignment/modules/auth/view/login_screen.dart';
 import 'package:bluestack_assignment/modules/home/view/home_screen.dart';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
+
+import 'package:bluestack_assignment/common.dart';
+
 import 'package:tuple/tuple.dart';
 
 class LoadingScreen extends StatefulWidget {

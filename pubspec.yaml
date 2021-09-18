@@ -38,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   provider: 
-  google_fonts: 
+
   flutter_spinkit:
   cached_network_image:
   dio:
