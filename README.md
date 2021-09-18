@@ -5,9 +5,9 @@
 
 ## Screenshots
 
-Login               |  Welcome  |  Register
+Loading               |  Login  |  Home
 :-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/TheAlphamerc/flutter_login_signup/blob/master/screenshots/screenshot_2.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_login_signup/blob/master/screenshots/screenshot_1.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_login_signup/blob/master/screenshots/screenshot_3.jpg?raw=true) 
+![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/loading_screen.jpg?raw=true)|![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/login_screen.jpg?raw=true)|![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/home_screen.jpg?raw=true) 
 
 ## Flutter plugins
 Plugin Name        |       
