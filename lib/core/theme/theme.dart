@@ -14,6 +14,8 @@ ThemeData kLightThemeData = ThemeData(
   //   900: Color(0xff365967)
   // }),
 
+  primaryColor: const Color(0xfff7892b),
+
   // brightness: Brightness.light,
   // primaryColor: Colors.white,
   // accentColor: const Color(0xff4b71fe),
@@ -23,8 +25,8 @@ ThemeData kLightThemeData = ThemeData(
   //   // brightness: Brightness.dark,
   //   background: Colors.white,
   // ),
-  // progressIndicatorTheme:
-  //     const ProgressIndicatorThemeData(color: Colors.orange),
+  progressIndicatorTheme:
+      const ProgressIndicatorThemeData(color: Color(0xfff7892b)),
   // // buttonColor: goldYellow,
   // // splashColor: Colors.black,
   // // accentColor: kThemeLightBlue, //Color for Label in Text Field
@@ -44,23 +46,38 @@ ThemeData kLightThemeData = ThemeData(
   // primaryTextTheme:
   //     const TextTheme(headline6: TextStyle(color: kThemePurpleBlue)),
 
-  // appBarTheme: const AppBarTheme(
-  //   elevation: 1,
-  //   // textTheme: TextTheme(headline6: TextStyle(color: kThemeDarkBlue)),
-  //   // textTheme: TextTheme(bodyText1: TextStyle(color: Colors.white)),
-  //   iconTheme: IconThemeData(color: kThemePurpleBlue),
+  appBarTheme: const AppBarTheme(
+    elevation: 0,
+    centerTitle: true,
 
-  //   titleTextStyle: TextStyle(
-  //       color: kThemePurpleBlue, fontSize: 18, fontWeight: FontWeight.w500),
-  //   // color: Colors.cyan,
-  //   // brightness: Brightness.dark,
+    iconTheme: IconThemeData(color: Colors.black),
+    titleTextStyle: TextStyle(
+      color: Colors.black,
+      fontWeight: FontWeight.w600,
+      fontSize: 20,
+    ),
 
-  //   // toolbarTextStyle: TextStyle(color: kThemeLightBlue),
-  //   systemOverlayStyle: SystemUiOverlayStyle(
-  //       statusBarBrightness: Brightness.dark,
-  //       statusBarIconBrightness: Brightness.light),
-  //   backgroundColor: Colors.white,
-  // ),
+    //  style: TextStyle(
+    //         fontWeight: FontWeight.w600,
+    //         fontSize: 20,
+    //       ),
+
+    backgroundColor: Colors.white,
+    // // textTheme: TextTheme(headline6: TextStyle(color: kThemeDarkBlue)),
+    // // textTheme: TextTheme(bodyText1: TextStyle(color: Colors.white)),
+    // iconTheme: IconThemeData(color: kThemePurpleBlue),
+
+    // titleTextStyle: TextStyle(
+    //     color: kThemePurpleBlue, fontSize: 18, fontWeight: FontWeight.w500),
+    // color: Colors.cyan,
+    // brightness: Brightness.dark,
+
+    // toolbarTextStyle: TextStyle(color: kThemeLightBlue),
+    // systemOverlayStyle: SystemUiOverlayStyle(
+    //     statusBarBrightness: Brightness.dark,
+    //     statusBarIconBrightness: Brightness.light),
+    // backgroundColor: Colors.white,
+  ),
   // scaffoldBackgroundColor: Colors.white,
 
   fontFamily: 'Poppins',

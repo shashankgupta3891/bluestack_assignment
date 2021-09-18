@@ -1,3 +1,4 @@
+import 'package:bluestack_assignment/core/constant/theme_constant.dart';
 import 'package:bluestack_assignment/modules/home/model/tournament_model.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +8,13 @@ class TournamentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Container(
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: kCardBoxShadow,
+        color: Colors.white,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -55,6 +60,7 @@ class TournamentCard extends StatelessWidget {
                         child: Text(
                           tournaments.gameName ?? "Fortnite",
                           maxLines: 1,
+                          style: TextStyle(color: Colors.grey.shade600),
                         ),
                       )
                     ],

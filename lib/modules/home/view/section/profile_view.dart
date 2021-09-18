@@ -1,5 +1,7 @@
 import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart';
 import 'package:bluestack_assignment/modules/auth/model/user_model.dart';
+import 'package:bluestack_assignment/modules/home/components/tournament_status_card.dart';
+import 'package:bluestack_assignment/modules/home/enum/tournament_stats_type.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,9 +15,10 @@ class ProfileView extends StatelessWidget {
 
     final int won = userModel?.tournamentsStats?.won ?? 0;
     final int played = userModel?.tournamentsStats?.played ?? 0;
-    final winningPercentage = ((won / played) * 100).toInt().toString();
+    final winningPercentage = ((won / played) * 100).toInt();
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      // padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,61 +28,34 @@ class ProfileView extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              SizedBox(
+              Container(
                 height: 85,
                 width: 85,
-                child: ClipRRect(
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
-
-                  child: Image.network(
-                    userModel?.profilePicture ??
-                        "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-                    fit: BoxFit.cover,
-                  ),
-
-                  //  Image.asset(
-
-                  //       "assets/images/default_face.jpg",
-                  //   fit: BoxFit.cover,
-                  // ),
-
-                  // child: Image.network(
-                  //   "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-                  //   fit: BoxFit.cover,
-                  // ),
-
-                  // child: CachedNetworkImage(
-                  //   fit: BoxFit.cover,
-                  //   imageUrl:
-                  //       "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-                  //   height: 80,
-                  //   width: 80,
-                  //   alignment: Alignment.topCenter,
-
-                  //   placeholder: (context, string) {
-                  //     return Container(
-                  //       color: Colors.red,
-                  //     );
-                  //   },
-                  // ),
+                  color: Colors.grey.shade200,
+                ),
+                child: Image.network(
+                  userModel?.profilePicture ??
+                      "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                  fit: BoxFit.cover,
                 ),
               ),
               Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
                         userModel?.fullName ?? "Shashank Gupta",
                         style: const TextStyle(fontSize: 24),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
+                      const SizedBox(height: 8),
+                      Container(
                         padding: const EdgeInsets.only(left: 16.0, right: 24),
                         height: 48,
                         decoration: BoxDecoration(
@@ -107,8 +83,8 @@ class ProfileView extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -123,39 +99,24 @@ class ProfileView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Expanded(
-                    child: getStatsWidget(
-                      played.toString(),
-                      'Tournaments\nplayed',
-                      const LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: <Color>[Colors.red, Colors.orange],
-                      ),
+                    child: TournamentStatusCard(
+                      stats: played,
+                      statsCategory: TournamentStatsType.played,
                     ),
                   ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 1.0, right: 1),
-                      child: getStatsWidget(
-                        won.toString(),
-                        'Tournaments\nwon',
-                        const LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: <Color>[Colors.blue, Colors.lightBlueAccent],
-                        ),
+                      child: TournamentStatusCard(
+                        stats: won,
+                        statsCategory: TournamentStatsType.won,
                       ),
                     ),
                   ),
                   Expanded(
-                    child: getStatsWidget(
-                      "${winningPercentage.toString()}%",
-                      'Winning\npercentage',
-                      const LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: <Color>[Colors.deepOrange, Colors.orange],
-                      ),
+                    child: TournamentStatusCard(
+                      stats: winningPercentage,
+                      statsCategory: TournamentStatsType.winningPercentage,
                     ),
                   )
                 ],
@@ -166,29 +127,4 @@ class ProfileView extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget getStatsWidget(
-    String stats, String statsCategory, LinearGradient gradient) {
-  return Container(
-    height: 100,
-    decoration: BoxDecoration(gradient: gradient),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          stats,
-          style: const TextStyle(color: Colors.white, fontSize: 16),
-        ),
-        Text(
-          statsCategory,
-          style: const TextStyle(
-            color: Colors.white,
-          ),
-          textAlign: TextAlign.center,
-        )
-      ],
-    ),
-  );
 }

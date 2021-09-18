@@ -4,7 +4,7 @@ import 'package:bluestack_assignment/modules/home/model/tournament_model.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 
-class TournamentProvider with ChangeNotifier {
+class HomeProvider with ChangeNotifier {
   List<Tournaments> _tournamentsList = [];
 
   List<Tournaments> get tournamentsList => _tournamentsList;
@@ -24,14 +24,14 @@ class TournamentProvider with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  Future<void> getTournamentList() async {
+  Future<void> fetchInitialList() async {
     dio.Response response;
 
     _isLoading = true;
     notifyListeners();
 
     try {
-      response = await _tournamentApiRepository.fetchTournaments();
+      response = await _tournamentApiRepository.fetchTournamentList();
 
       TournamentModel tournamentResponse;
       tournamentResponse =

@@ -1,6 +1,6 @@
 import 'package:bluestack_assignment/core/service/internal_storage_service.dart';
 import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart';
-import 'package:bluestack_assignment/modules/home/controller/tournament_provider.dart';
+import 'package:bluestack_assignment/modules/home/controller/home_provider.dart';
 import 'package:bluestack_assignment/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AuthProvider>(
           create: (_) => AuthProvider(),
         ),
-        ChangeNotifierProvider<TournamentProvider>(
-          create: (_) => TournamentProvider(),
+        ChangeNotifierProvider<HomeProvider>(
+          create: (_) => HomeProvider(),
         ),
       ],
       child: MaterialApp(

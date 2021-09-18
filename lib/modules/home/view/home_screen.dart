@@ -1,12 +1,14 @@
 import 'package:bluestack_assignment/core/service/internal_storage_service.dart';
 import 'package:bluestack_assignment/modules/auth/controller/auth_provider.dart';
 import 'package:bluestack_assignment/modules/auth/view/drawer/drawer.dart';
-import 'package:bluestack_assignment/modules/home/controller/tournament_provider.dart';
+import 'package:bluestack_assignment/modules/home/controller/home_provider.dart';
 import 'package:bluestack_assignment/modules/home/view/section/profile_view.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 import 'section/tournament_grid_section.dart';
 
@@ -25,29 +27,19 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
-      await context.read<TournamentProvider>().getTournamentList();
+      await context.read<HomeProvider>().fetchInitialList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final TournamentProvider tournamentProvide =
-        context.read<TournamentProvider>();
+    final HomeProvider tournamentProvide = context.read<HomeProvider>();
+
     final AuthProvider authProvider = context.read<AuthProvider>();
     return Scaffold(
       drawer: const HomeDrawer(),
       appBar: AppBar(
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
-        titleTextStyle: const TextStyle(color: Colors.black),
-        backgroundColor: Colors.white,
-        title: const Text(
-          'Flyingwolf',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
+        title: const Text('Flyingwolf'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -55,11 +47,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         elevation: 0,
-        // leading: const Icon(Icons.menu),
       ),
-      body: Selector<TournamentProvider, bool>(
-        selector: (_, tournamentProvider) => tournamentProvider.isLoading,
-        builder: (context, isLoading, child) {
+      body: Selector<HomeProvider, Tuple2<bool, bool>>(
+        selector: (_, provider) => Tuple2(provider.isLoading, provider.canNext),
+        builder: (context, listener, _) {
+          final bool isLoading = listener.item1;
+          final bool canNext = listener.item2;
+
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -74,35 +68,41 @@ class _HomeScreenState extends State<HomeScreen> {
                         tournamentProvide.fetchNext();
                       }
 
-                      print(tournamentProvide.tournamentsList.length);
-                      // setState(() {
-                      //   this.isLoading = true;
-                      // });
-                      // widget.onNextPage?.call(currentPage++)?.then((bool isLoaded) {
-                      //   setState(() {
-                      //     this.isLoading = false;
-                      //   });
-                      // });
+                      debugPrint(
+                          tournamentProvide.tournamentsList.length.toString());
 
                       debugPrint(isLoading.toString());
                     }
                     return true;
                   },
-                  child: child ?? Container(),
+                  child: Scrollbar(
+                    isAlwaysShown: true,
+                    thickness: 8,
+                    radius: const Radius.circular(4),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const ProfileView(),
+                          const TournamentGridSection(),
+                          if (canNext)
+                            const Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: CircularProgressIndicator(),
+                            ),
+
+                          //       Selector<TournamentProvider, bool>(
+                          // selector: (_, tournamentProvider) => tournamentProvider.canNext,
+                          // builder: (context, isLoading, child) => Container(),
+                          //       ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
           );
         },
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: Column(
-            children: const [
-              ProfileView(),
-              TournamentGridSection(),
-            ],
-          ),
-        ),
       ),
     );
   }
