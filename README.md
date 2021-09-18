@@ -3,6 +3,13 @@
 ## Download App
 <a href="https://github.com/shashankgupta3891/bluestack_assignment/tree/master/output_apks"><img src="https://playerzon.com/asset/download.png" width="200"></img></a>
 
+Features Implemented: |       
+:-------------------------|
+|Infinity Scroll |
+|Support of localization|
+|Login API|
+|Pagination|
+
 ## Screenshots and Video demo
 
  Video Demo     | Home Screen
