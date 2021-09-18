@@ -5,9 +5,13 @@
 
 ## Screenshots and Video demo
 
- Video Demo   |Loading      |  Login  |  Home    
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/demo.gif?raw=true)|![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/loading_screen.jpg?raw=true)|![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/login_screen.jpg?raw=true)|![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/home_screen.jpg?raw=true)
+ Video Demo     | Home Screen
+:-------------------------:|:-------------------------:
+![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/demo.gif?raw=true)| ![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/home_screen.jpg?raw=true)
+
+Loading Screen             |  Login Screen
+:-------------------------:|:-------------------------:
+![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/loading_screen.jpg?raw=true)|![](https://github.com/shashankgupta3891/bluestack_assignment/blob/master/screenshots/login_screen.jpg?raw=true)
 
 ## Flutter plugins
 Plugin Name        |       
