@@ -18,7 +18,6 @@ class ProfileView extends StatelessWidget {
     final winningPercentage = ((won / played) * 100).toInt();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      // padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
