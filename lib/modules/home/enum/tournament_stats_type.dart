@@ -3,17 +3,6 @@ import 'package:flutter/material.dart';
 enum TournamentStatsType { played, won, winningPercentage }
 
 extension TournamentStatusTypeExtension on TournamentStatsType {
-  // String get text {
-  //   switch (this) {
-  //     case Cat.black:
-  //       return 'Mr Black Cat';
-  //     case Cat.white:
-  //       return 'Ms White Cat';
-  //     default:
-  //       return null;
-  //   }
-  // }
-
   String getStats(int stats) {
     switch (this) {
       case TournamentStatsType.winningPercentage:

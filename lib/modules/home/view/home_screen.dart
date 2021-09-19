@@ -48,10 +48,6 @@ class HomeScreen extends StatelessWidget {
                   );
                 }
               }
-
-              debugPrint(tournamentProvide.tournamentsList.length.toString());
-
-              debugPrint(isLoading.toString());
             }
             return true;
           }

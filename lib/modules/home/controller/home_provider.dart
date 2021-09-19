@@ -24,35 +24,6 @@ class HomeProvider with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  Future<void> fetchInitialList() async {
-    dio.Response response;
-
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      response = await _tournamentApiRepository.fetchTournamentList();
-
-      TournamentModel tournamentResponse;
-      tournamentResponse =
-          TournamentModel.fromJson(response.data as Map<String, dynamic>);
-
-      _tournamentsList = [
-        ..._tournamentsList,
-        ...tournamentResponse.data?.tournaments ?? []
-      ];
-      _isLoading = false;
-
-      notifyListeners();
-    } on dio.DioError catch (e) {
-      debugPrint(e.message);
-      throw Exception(e.message);
-    } catch (e) {
-      debugPrint(e.toString());
-      throw Exception(e.toString());
-    }
-  }
-
   Future<void> fetchNext() async {
     dio.Response response;
 
